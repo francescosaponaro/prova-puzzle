@@ -1,0 +1,13 @@
+@import "@styles/index.module.scss";
+
+.close_button {
+    border-radius: 50%;
+    background-color: $black;
+    height: 40px;
+    width: 40px;
+    min-width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

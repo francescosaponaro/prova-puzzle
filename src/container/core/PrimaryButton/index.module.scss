@@ -1,0 +1,50 @@
+@import "@styles/index.module.scss";
+
+.custom_button {
+    cursor: pointer;
+    height: 46px;
+    padding: 12px 8px 12px 8px;
+    gap: 10px;
+    border-radius: 30px;
+    width: 100%;
+    font-weight: $font-weight-bold;
+    color: $white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-size: $base-font-size;
+    transition: opacity 0.4s ease-out;
+
+    svg {
+        * {
+            fill: $white;
+        }
+    }
+}
+
+.primary {
+    background: $black;
+    color: $white;
+
+}
+
+.secondary {
+    color: $black;
+    background: transparent;
+    border: 2px solid $black;
+
+    svg {
+
+        * {
+            fill: $black;
+        }
+
+    }
+}
+
+:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    // transition: opacity 0.4s ease-out;
+}

@@ -1,0 +1,89 @@
+@import "@styles/index.module.scss";
+
+.settings {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    .button {
+        background-color: $black;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        svg {
+            transition: transform 0.3s ease;
+        }
+
+        &:hover {
+            svg {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    .modal {
+        display: none;
+        animation: close 0.2s ease-in-out;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 50px;
+        right: 0;
+        background-color: $black;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 1;
+
+        div {
+            color: $white;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: $min-font-size;
+            font-weight: $font-weight-bold;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 10px;
+
+            &:hover {
+                background-color: $gray-dark;
+            }
+        }
+    }
+
+    .open {
+        display: block;
+        animation: open 0.2s ease-in-out;
+    }
+
+    @keyframes open {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes close {
+        from {
+            display: block;
+            opacity: 1;
+        }
+
+        to {
+            display: none;
+            opacity: 0;
+        }
+    }
+}
