@@ -1,0 +1,15 @@
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+
+[build.environment]
+  GENERATE_SOURCEMAP = "false"
+  NODE_VERSION= "20.11.0"
+  
+[build]
+  #base = "project/"
+  publish = "dist/"
+  command = "CI=False && yarn build"
+  
