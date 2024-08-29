@@ -11,13 +11,15 @@ import Settings from './containers/Settings';
 import IconButton from '@core/IconButton';
 import ROUTES from '@routes/constants';
 import HomeIcon from '@assets/svgs/home.svg'
+import clsx from 'clsx';
 
-const DemoPuzzle = () => {
+const DemoPuzzle = ({ isLandscape }) => {
     const puzzleRef = useRef(null)
     const containerRef = useRef(null)
     const [showModal, setShowModal] = useState(false);
     const [canvas, setCanvas] = useState(null);
     const [additionalHeight, setAdditionalHeight] = useState(0);
+    const [hasImage, setHasImage] = useState(true);
     const navigate = useNavigate();
     let audio = new Audio(AudioFile);
     let audioComplete = new Audio(AudioFileComplete);
@@ -118,13 +120,15 @@ const DemoPuzzle = () => {
     return (
         <div className={styles.page}>
             <div className={styles.container} ref={containerRef}>
-                <div className={styles.fake_canvas}><img src={PuzzleImage} /></div>
+                <div className={styles.fake_canvas}>{<img src={PuzzleImage} className={clsx({ [styles.hide]: !hasImage })} />}</div>
                 <div className={styles.additional_height} style={{ height: additionalHeight }} />
                 <div className={styles.puzzle} ref={puzzleRef} id="puzzle"></div>
                 <Settings
-                    solveCallback={() => solvePuzzle()}
-                    shuffleCallback={() => shufflePuzzle()}
-                    redrawCallback={() => initializePuzzle()}
+                    hasImage={hasImage}
+                    toggleImage={() => setHasImage(prev => !prev)}
+                    solve={() => solvePuzzle()}
+                    shuffle={() => shufflePuzzle()}
+                    redraw={() => initializePuzzle()}
                 />
                 <Modal
                     modalState={showModal}
