@@ -12,23 +12,23 @@ import IconButton from '@core/IconButton';
 import ROUTES from '@routes/constants';
 import HomeIcon from '@assets/svgs/home.svg'
 import clsx from 'clsx';
+import ORIENTATION_SETTINGS from './constants/ORIENTATION_SETTINGS';
 
-const DemoPuzzle = ({ isLandscape }) => {
+const DemoPuzzle = ({ isLandscape = true }) => {
     const puzzleRef = useRef(null)
     const containerRef = useRef(null)
+    const boardRef = useRef(null)
     const [showModal, setShowModal] = useState(false);
     const [canvas, setCanvas] = useState(null);
+    console.log(canvas, 'canvas');
     const [additionalHeight, setAdditionalHeight] = useState(0);
+    console.log(additionalHeight, 'additionalHeight');
+    const [orientation, setOrientation] = useState(isLandscape ? 'LANDSCAPE' : 'PORTRAIT');
+    console.log(orientation, 'orientation');
     const [hasImage, setHasImage] = useState(true);
     const navigate = useNavigate();
     let audio = new Audio(AudioFile);
     let audioComplete = new Audio(AudioFileComplete);
-
-    useEffect(() => {
-        if (containerRef.current && containerRef.current.clientHeight - containerRef.current.clientWidth < 400) {
-            setAdditionalHeight(containerRef.current.clientHeight < 575 ? 200 : 150);
-        }
-    }, [containerRef])
 
     const solvePuzzle = () => {
         canvas.solve();
@@ -40,9 +40,48 @@ const DemoPuzzle = ({ isLandscape }) => {
     const shufflePuzzle = () => {
         canvas.shuffleGrid();
         canvas.puzzle.pieces.forEach(piece => {
-            const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / 500);
-            piece.translate(0, translateY);
+            const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
+            piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
         });
+        canvas.redraw();
+    }
+
+    const additionalHeightHandler = () => {
+        if (!containerRef?.current || !boardRef?.current || !canvas) return;
+
+        const containerHeight = containerRef.current.clientHeight;
+        const puzzleContentHeight = canvas.pieceSize.diameter.y * canvas.maxPiecesCount.y * 2;
+        const boardHeight = boardRef.current.clientHeight;
+        const difference = (puzzleContentHeight + boardHeight) - containerHeight;
+        console.log(boardHeight, "boardHeight")
+        console.log(puzzleContentHeight, "puzzleContentHeight")
+        console.log(containerHeight, "containerHeight")
+        console.log(difference, "difference")
+        if (containerHeight < puzzleContentHeight) {
+            setAdditionalHeight(difference);
+        }
+    }
+
+    const orientationSetter = () => {
+        if (!containerRef.current) return;
+
+        if (isLandscape) {
+            if (containerRef.current.clientWidth >= 500) {
+                setOrientation("LANDSCAPE");
+            } else {
+                setOrientation("PORTRAIT");
+            }
+        }
+    }
+
+    const resizePuzzle = () => {
+        if (canvas == null) return;
+
+        additionalHeightHandler();
+        orientationSetter();
+
+        canvas.resize(containerRef.current.clientWidth - 40, containerRef.current.clientHeight + additionalHeight - 24);
+        canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
         canvas.redraw();
     }
 
@@ -54,7 +93,7 @@ const DemoPuzzle = ({ isLandscape }) => {
 
         puzzleImg.onload = () => {
             const puzzle = puzzleRef.current;
-            const scale = containerRef.current.offsetWidth / 500;
+            const scale = containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale;
 
             const newCanvas = new Canvas(puzzle.id, {
                 width: containerRef.current.clientWidth - 40,
@@ -75,10 +114,12 @@ const DemoPuzzle = ({ isLandscape }) => {
             newCanvas.autogenerate({ insertsGenerator: generators.random });
             newCanvas.shuffleGrid();
             newCanvas.registerKeyboardGestures();
+
             newCanvas.puzzle.pieces.forEach(piece => {
                 const translateY = (containerRef.current.clientHeight * 0.5) / scale;
-                piece.translate(0, translateY);
+                piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
             });
+
             newCanvas.draw();
 
             newCanvas.onConnect(() => audio.play())
@@ -99,29 +140,46 @@ const DemoPuzzle = ({ isLandscape }) => {
     }, [puzzleRef, containerRef, additionalHeight]);
 
     useEffect(() => {
-        const resizePuzzle = () => {
-            if (canvas == null) return;
-            if (containerRef.current.clientHeight - containerRef.current.clientWidth < 400) {
-                setAdditionalHeight(containerRef.current.clientHeight < 575 ? 200 : 150);
-            } else {
-                setAdditionalHeight(0);
-            }
-            canvas.resize(containerRef.current.clientWidth - 40, containerRef.current.clientHeight - 24);
-            canvas.scale(containerRef.current.offsetWidth / 500);
-            canvas.redraw();
-        }
+        additionalHeightHandler();
+    }, [containerRef, boardRef, canvas])
+
+    useEffect(() => {
+        orientationSetter();
+    }, [isLandscape, containerRef])
+
+    // useEffect(() => {
+    //     if (!canvas) return;
+    //     // canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
+    //     console.log(ORIENTATION_SETTINGS[orientation].scale, 'ORIENTATION_SETTINGS[orientation].scale');
+    //     console.log(ORIENTATION_SETTINGS[orientation].translateX, 'ORIENTATION_SETTINGS[orientation].translateX');
+    //     canvas.puzzle.pieces.forEach(piece => {
+    //         const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
+    //         piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
+    //     });
+    //     canvas.redraw();
+    // }, [orientation, containerRef])
+
+    useEffect(() => {
         window.addEventListener('resize', () => resizePuzzle());
 
         return () => {
             window.removeEventListener('resize', () => resizePuzzle());
         }
-    }, [containerRef, canvas])
+    }, [containerRef, canvas, orientation])
 
     return (
         <div className={styles.page}>
-            <div className={styles.container} ref={containerRef}>
-                <div className={styles.fake_canvas}>{<img src={PuzzleImage} className={clsx({ [styles.hide]: !hasImage })} />}</div>
-                <div className={styles.additional_height} style={{ height: additionalHeight }} />
+            <div className={styles.container}
+                ref={containerRef}
+                style={{ maxWidth: ORIENTATION_SETTINGS[orientation].maxWidth, height: `calc(100% + ${additionalHeight})` }}
+            >
+                <div
+                    ref={boardRef}
+                    className={styles.fake_canvas}
+                    style={{ maxHeight: ORIENTATION_SETTINGS[orientation].maxHeightCanvas }}
+                >
+                    {<img src={PuzzleImage} className={clsx({ [styles.hide]: !hasImage })} />}
+                </div>
                 <div className={styles.puzzle} ref={puzzleRef} id="puzzle"></div>
                 <Settings
                     hasImage={hasImage}
