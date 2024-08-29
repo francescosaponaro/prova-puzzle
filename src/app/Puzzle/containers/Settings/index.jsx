@@ -5,8 +5,9 @@ import ImpostazioniIcon from '@assets/svgs/impostazioni.svg'
 import clsx from 'clsx';
 import RestartIcon from '@assets/svgs/restart.svg'
 import ResetIcon from '@assets/svgs/reset.svg'
+import IconButton from "@core/IconButton";
 
-const Settings = ({ shuffleCallback, redrawCallback }) => {
+const Settings = ({ shuffleCallback, redrawCallback, solveCallback }) => {
     const [showModal, setShowModal] = useState(false);
     const modalRef = useRef(null);
     useOutsideClick(modalRef, () => {
@@ -17,16 +18,18 @@ const Settings = ({ shuffleCallback, redrawCallback }) => {
 
     return (
         <div className={styles.settings}>
-            <div className={styles.button}
+            <IconButton
                 onClick={(e) => {
                     e.stopPropagation();
                     setShowModal(prev => !prev);
-                }}>
-                <ImpostazioniIcon />
-            </div>
+                }}
+                icon={<ImpostazioniIcon />}
+                isRotate={true}
+            />
             <div className={clsx(styles.modal, { [styles.open]: showModal })} ref={modalRef}>
-                <div onClick={shuffleCallback}><ResetIcon /> Riordina</div>
+                <div onClick={solveCallback}><RestartIcon /> Risolvi</div>
                 <div onClick={redrawCallback}><RestartIcon /> Ricomincia</div>
+                <div onClick={shuffleCallback}><ResetIcon /> Riordina</div>
             </div>
         </div>
     )

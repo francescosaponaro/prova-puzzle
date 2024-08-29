@@ -5,27 +5,6 @@
     bottom: 20px;
     right: 20px;
 
-    .button {
-        background-color: $black;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-
-        svg {
-            transition: transform 0.3s ease;
-        }
-
-        &:hover {
-            svg {
-                transform: rotate(180deg);
-            }
-        }
-    }
-
     .modal {
         display: none;
         animation: close 0.2s ease-in-out;

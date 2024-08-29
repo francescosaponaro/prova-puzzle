@@ -1,6 +1,6 @@
 import { Canvas, painters, outline, generators } from 'headbreaker';
-import { useState } from 'react'
-import { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react';
 import PuzzleImage from '@assets/images/5a3a2e96273f0fc812fd59202a5f6eb6.png'
 import AudioFile from '@assets/audio/1232242279687651369.ogg'
 import AudioFileComplete from '@assets/audio/audio.mp3'
@@ -8,6 +8,9 @@ import styles from './index.module.scss'
 import Modal from "@common/Modal"
 import SuccessModal from './containers/SuccessModal';
 import Settings from './containers/Settings';
+import IconButton from '@core/IconButton';
+import ROUTES from '@routes/constants';
+import HomeIcon from '@assets/svgs/home.svg'
 
 const DemoPuzzle = () => {
     const puzzleRef = useRef(null)
@@ -15,6 +18,7 @@ const DemoPuzzle = () => {
     const [showModal, setShowModal] = useState(false);
     const [canvas, setCanvas] = useState(null);
     const [additionalHeight, setAdditionalHeight] = useState(0);
+    const navigate = useNavigate();
     let audio = new Audio(AudioFile);
     let audioComplete = new Audio(AudioFileComplete);
 
@@ -23,6 +27,13 @@ const DemoPuzzle = () => {
             setAdditionalHeight(containerRef.current.clientHeight < 575 ? 200 : 150);
         }
     }, [containerRef])
+
+    const solvePuzzle = () => {
+        canvas.solve();
+        canvas.redraw();
+        audioComplete.play();
+        setTimeout(() => setShowModal(true), 500)
+    }
 
     const shufflePuzzle = () => {
         canvas.shuffleGrid();
@@ -74,7 +85,7 @@ const DemoPuzzle = () => {
             newCanvas.attachSolvedValidator();
             newCanvas.onValid(() => {
                 audioComplete.play();
-                setShowModal(true)
+                setTimeout(() => setShowModal(true), 500)
             });
 
             setCanvas(newCanvas);
@@ -111,6 +122,7 @@ const DemoPuzzle = () => {
                 <div className={styles.additional_height} style={{ height: additionalHeight }} />
                 <div className={styles.puzzle} ref={puzzleRef} id="puzzle"></div>
                 <Settings
+                    solveCallback={() => solvePuzzle()}
                     shuffleCallback={() => shufflePuzzle()}
                     redrawCallback={() => initializePuzzle()}
                 />
@@ -119,6 +131,12 @@ const DemoPuzzle = () => {
                     closeModal={() => setShowModal(false)}
                     children={<SuccessModal closeModal={() => setShowModal(false)} />}
                 />
+                <div className={styles.back_btn}>
+                    <IconButton
+                        onClick={() => navigate(ROUTES.HOME)}
+                        icon={<HomeIcon />}
+                    />
+                </div>
             </div>
         </div>
     )
