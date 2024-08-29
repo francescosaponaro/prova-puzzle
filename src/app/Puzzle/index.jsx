@@ -2,6 +2,8 @@ import { Canvas, painters, outline, generators } from 'headbreaker';
 import { useState } from 'react'
 import { useEffect, useRef } from 'react';
 import PuzzleImage from '@assets/images/5a3a2e96273f0fc812fd59202a5f6eb6.png'
+import AudioFile from '@assets/audio/1232242279687651369.ogg'
+import AudioFileComplete from '@assets/audio/audio.mp3'
 import styles from './index.module.scss'
 import Modal from "@common/Modal"
 import SuccessModal from './containers/SuccessModal';
@@ -13,6 +15,8 @@ const DemoPuzzle = () => {
     const [showModal, setShowModal] = useState(false);
     const [canvas, setCanvas] = useState(null);
     const [additionalHeight, setAdditionalHeight] = useState(0);
+    let audio = new Audio(AudioFile);
+    let audioComplete = new Audio(AudioFileComplete);
 
     useEffect(() => {
         if (containerRef.current && containerRef.current.clientHeight - containerRef.current.clientWidth < 400) {
@@ -63,8 +67,15 @@ const DemoPuzzle = () => {
                 piece.translate(0, translateY);
             });
             newCanvas.draw();
+
+            newCanvas.onConnect(() => audio.play())
+            newCanvas.onDisconnect(() => audio.play())
+
             newCanvas.attachSolvedValidator();
-            newCanvas.onValid(() => setShowModal(true));
+            newCanvas.onValid(() => {
+                audioComplete.play();
+                setShowModal(true)
+            });
 
             setCanvas(newCanvas);
         };
