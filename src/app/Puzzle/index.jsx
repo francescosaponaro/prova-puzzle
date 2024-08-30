@@ -22,7 +22,7 @@ const DemoPuzzle = ({ isLandscape = false }) => {
     // console.log(canvas, 'canvas');
     const [additionalHeight, setAdditionalHeight] = useState(0);
     const [orientation, setOrientation] = useState(isLandscape ? 'LANDSCAPE' : 'PORTRAIT');
-    console.log(orientation, 'orientation');
+    // console.log(orientation, 'orientation');
     const [hasImage, setHasImage] = useState(true);
     const navigate = useNavigate();
     let audio = new Audio(AudioFile);
@@ -48,12 +48,11 @@ const DemoPuzzle = ({ isLandscape = false }) => {
     const additionalHeightHandler = () => {
         if (!containerRef?.current || !canvas) return;
 
-        const containerHeight = containerRef.current.clientHeight;
-        const containerWidth = containerRef.current.clientWidth;
+        const { clientHeight, clientWidth } = containerRef.current;
 
-        if (containerWidth * 2 < containerHeight) {
+        if (clientWidth * 2 < clientHeight) {
             setAdditionalHeight(0);
-        } else if (containerHeight - containerWidth > 200) {
+        } else if (clientHeight - clientWidth > 200) {
             setAdditionalHeight(100);
         } else {
             setAdditionalHeight(200);
@@ -61,27 +60,21 @@ const DemoPuzzle = ({ isLandscape = false }) => {
     }
 
     const orientationSetter = () => {
-        if (!containerRef.current || !isLandscape) return;
-
-        if (containerRef.current.clientWidth >= 500) {
-            setOrientation("LANDSCAPE");
-        } else {
-            setOrientation("PORTRAIT");
+        if (containerRef.current && isLandscape) {
+            const { clientWidth } = containerRef.current;
+            setOrientation(clientWidth >= 500 ? "LANDSCAPE" : "PORTRAIT");
         }
     }
 
-    useEffect(() => {
-        initializePuzzle();
-    }, [orientation, containerRef])
-
     const resizePuzzle = () => {
-        if (canvas == null) return;
+        if (!canvas) return;
 
         additionalHeightHandler();
-        if (isLandscape) orientationSetter();
+        orientationSetter();
 
-        canvas.resize(containerRef.current.clientWidth - 40, containerRef.current.clientHeight + additionalHeight - 24);
-        canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
+        const { clientWidth, clientHeight } = containerRef.current;
+        canvas.resize(clientWidth - 40, clientHeight + additionalHeight - 24);
+        canvas.scale(clientWidth / ORIENTATION_SETTINGS[orientation].scale);
         canvas.redraw();
     }
 
@@ -137,7 +130,7 @@ const DemoPuzzle = ({ isLandscape = false }) => {
 
     useEffect(() => {
         initializePuzzle();
-    }, [puzzleRef, containerRef, additionalHeight]);
+    }, [puzzleRef, containerRef, additionalHeight, orientation]);
 
     useEffect(() => {
         additionalHeightHandler();
@@ -153,7 +146,7 @@ const DemoPuzzle = ({ isLandscape = false }) => {
         return () => {
             window.removeEventListener('resize', () => resizePuzzle());
         }
-    }, [containerRef, canvas, orientation])
+    }, [resizePuzzle])
 
     return (
         <div className={styles.page}>
