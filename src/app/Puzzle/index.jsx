@@ -2,8 +2,8 @@ import { Canvas, painters, outline, generators } from 'headbreaker';
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react';
 import PuzzleImage from '@assets/images/5a3a2e96273f0fc812fd59202a5f6eb6.png'
-import AudioFile from '@assets/audio/1232242279687651369.ogg'
-import AudioFileComplete from '@assets/audio/audio.mp3'
+import AudioFile from '@assets/audio/connect.mp3'
+import AudioFileComplete from '@assets/audio/1232242279687651369.ogg'
 import styles from './index.module.scss'
 import Modal from "@common/Modal"
 import SuccessModal from './containers/SuccessModal';
@@ -14,7 +14,7 @@ import HomeIcon from '@assets/svgs/home.svg'
 import clsx from 'clsx';
 import ORIENTATION_SETTINGS from './constants/ORIENTATION_SETTINGS';
 
-const DemoPuzzle = ({ isLandscape = true }) => {
+const DemoPuzzle = ({ isLandscape = false }) => {
     const puzzleRef = useRef(null)
     const containerRef = useRef(null)
     const [showModal, setShowModal] = useState(false);
@@ -61,14 +61,12 @@ const DemoPuzzle = ({ isLandscape = true }) => {
     }
 
     const orientationSetter = () => {
-        if (!containerRef.current) return;
+        if (!containerRef.current || !isLandscape) return;
 
-        if (isLandscape) {
-            if (containerRef.current.clientWidth >= 500) {
-                setOrientation("LANDSCAPE");
-            } else {
-                setOrientation("PORTRAIT");
-            }
+        if (containerRef.current.clientWidth >= 500) {
+            setOrientation("LANDSCAPE");
+        } else {
+            setOrientation("PORTRAIT");
         }
     }
 
@@ -80,7 +78,7 @@ const DemoPuzzle = ({ isLandscape = true }) => {
         if (canvas == null) return;
 
         additionalHeightHandler();
-        orientationSetter();
+        if (isLandscape) orientationSetter();
 
         canvas.resize(containerRef.current.clientWidth - 40, containerRef.current.clientHeight + additionalHeight - 24);
         canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
