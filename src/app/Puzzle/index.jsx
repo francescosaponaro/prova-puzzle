@@ -47,18 +47,17 @@ const DemoPuzzle = ({ isLandscape = true }) => {
     }
 
     const additionalHeightHandler = () => {
-        if (!containerRef?.current || !boardRef?.current || !canvas) return;
+        if (!containerRef?.current || !canvas) return;
 
         const containerHeight = containerRef.current.clientHeight;
-        const puzzleContentHeight = canvas.pieceSize.diameter.y * canvas.maxPiecesCount.y * 2;
-        const boardHeight = boardRef.current.clientHeight;
-        const difference = (puzzleContentHeight + boardHeight) - containerHeight;
-        console.log(boardHeight, "boardHeight")
-        console.log(puzzleContentHeight, "puzzleContentHeight")
-        console.log(containerHeight, "containerHeight")
-        console.log(difference, "difference")
-        if (containerHeight < puzzleContentHeight) {
-            setAdditionalHeight(difference);
+        const containerWidth = containerRef.current.clientWidth;
+
+        if (containerWidth * 2 < containerHeight) {
+            setAdditionalHeight(0);
+        } else if (containerHeight - containerWidth > 200) {
+            setAdditionalHeight(100);
+        } else {
+            setAdditionalHeight(200);
         }
     }
 
@@ -141,7 +140,7 @@ const DemoPuzzle = ({ isLandscape = true }) => {
 
     useEffect(() => {
         additionalHeightHandler();
-    }, [containerRef, boardRef, canvas])
+    }, [containerRef, canvas])
 
     useEffect(() => {
         orientationSetter();
