@@ -17,12 +17,10 @@ import ORIENTATION_SETTINGS from './constants/ORIENTATION_SETTINGS';
 const DemoPuzzle = ({ isLandscape = true }) => {
     const puzzleRef = useRef(null)
     const containerRef = useRef(null)
-    const boardRef = useRef(null)
     const [showModal, setShowModal] = useState(false);
     const [canvas, setCanvas] = useState(null);
-    console.log(canvas, 'canvas');
+    // console.log(canvas, 'canvas');
     const [additionalHeight, setAdditionalHeight] = useState(0);
-    console.log(additionalHeight, 'additionalHeight');
     const [orientation, setOrientation] = useState(isLandscape ? 'LANDSCAPE' : 'PORTRAIT');
     console.log(orientation, 'orientation');
     const [hasImage, setHasImage] = useState(true);
@@ -38,6 +36,7 @@ const DemoPuzzle = ({ isLandscape = true }) => {
     }
 
     const shufflePuzzle = () => {
+        canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
         canvas.shuffleGrid();
         canvas.puzzle.pieces.forEach(piece => {
             const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
@@ -72,6 +71,10 @@ const DemoPuzzle = ({ isLandscape = true }) => {
             }
         }
     }
+
+    useEffect(() => {
+        initializePuzzle();
+    }, [orientation, containerRef])
 
     const resizePuzzle = () => {
         if (canvas == null) return;
@@ -146,18 +149,6 @@ const DemoPuzzle = ({ isLandscape = true }) => {
         orientationSetter();
     }, [isLandscape, containerRef])
 
-    // useEffect(() => {
-    //     if (!canvas) return;
-    //     // canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
-    //     console.log(ORIENTATION_SETTINGS[orientation].scale, 'ORIENTATION_SETTINGS[orientation].scale');
-    //     console.log(ORIENTATION_SETTINGS[orientation].translateX, 'ORIENTATION_SETTINGS[orientation].translateX');
-    //     canvas.puzzle.pieces.forEach(piece => {
-    //         const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
-    //         piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
-    //     });
-    //     canvas.redraw();
-    // }, [orientation, containerRef])
-
     useEffect(() => {
         window.addEventListener('resize', () => resizePuzzle());
 
@@ -173,7 +164,6 @@ const DemoPuzzle = ({ isLandscape = true }) => {
                 style={{ maxWidth: ORIENTATION_SETTINGS[orientation].maxWidth, height: `calc(100% + ${additionalHeight})` }}
             >
                 <div
-                    ref={boardRef}
                     className={styles.fake_canvas}
                     style={{ maxHeight: ORIENTATION_SETTINGS[orientation].maxHeightCanvas }}
                 >
