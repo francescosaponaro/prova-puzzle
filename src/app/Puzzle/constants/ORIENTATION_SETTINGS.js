@@ -9,7 +9,7 @@ const settings = {
         maxWidth: 500,
         scale: 500,
         maxHeightCanvas: "auto",
-        translateX: 0,
+        translateX: -20,
     },
 };
 

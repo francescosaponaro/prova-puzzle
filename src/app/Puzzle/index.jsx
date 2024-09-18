@@ -43,7 +43,7 @@ const DemoPuzzle = ({ isLandscape }) => {
         canvas.shuffleGrid();
         canvas.puzzle.pieces.forEach(piece => {
             // const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
-            const translateY = (containerRef.current.clientWidth * 1) / scale;
+            const translateY = (containerRef.current.clientWidth * 0.95) / scale;
             piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
         });
         canvas.redraw();
@@ -57,16 +57,16 @@ const DemoPuzzle = ({ isLandscape }) => {
         if (clientWidth * 2 < clientHeight) {
             setAdditionalHeight(0);
         } else if (clientHeight - clientWidth > 325) {
-            console.log(clientHeight - clientWidth, '> 325');
+            // console.log(clientHeight - clientWidth, '> 325');
             setAdditionalHeight(100);
         } else if (clientHeight - clientWidth > 260) {
-            console.log(clientHeight - clientWidth, '> 260');
+            // console.log(clientHeight - clientWidth, '> 260');
             setAdditionalHeight(200);
         } else if (clientHeight - clientWidth > 200) {
-            console.log(clientHeight - clientWidth, '> 200');
+            // console.log(clientHeight - clientWidth, '> 200');
             setAdditionalHeight(300);
         } else {
-            setAdditionalHeight(400);
+            setAdditionalHeight(300);
         }
     }
 
@@ -102,7 +102,7 @@ const DemoPuzzle = ({ isLandscape }) => {
             const newCanvas = new Canvas(puzzle.id, {
                 width: containerRef.current.clientWidth - 40,
                 height: containerRef.current.clientHeight + additionalHeight - 24,
-                pieceSize: 67,
+                pieceSize: 73,
                 proximity: 4,
                 strokeWidth: 2,
                 strokeColor: '#F0F0F0',
@@ -121,7 +121,7 @@ const DemoPuzzle = ({ isLandscape }) => {
 
             newCanvas.puzzle.pieces.forEach(piece => {
                 // const translateY = (containerRef.current.clientHeight * 0.6) / scale;
-                const translateY = (containerRef.current.clientWidth * 1) / scale;
+                const translateY = (containerRef.current.clientWidth * 0.95) / scale;
                 piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
             });
 
