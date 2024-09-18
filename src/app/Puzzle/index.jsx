@@ -14,7 +14,7 @@ import HomeIcon from '@assets/svgs/home.svg'
 import clsx from 'clsx';
 import ORIENTATION_SETTINGS from './constants/ORIENTATION_SETTINGS';
 
-const DemoPuzzle = ({ isLandscape = false }) => {
+const DemoPuzzle = ({ isLandscape }) => {
     const puzzleRef = useRef(null)
     const containerRef = useRef(null)
     const [showModal, setShowModal] = useState(false);
@@ -23,13 +23,16 @@ const DemoPuzzle = ({ isLandscape = false }) => {
     const [additionalHeight, setAdditionalHeight] = useState(0);
     const [orientation, setOrientation] = useState(isLandscape ? 'LANDSCAPE' : 'PORTRAIT');
     // console.log(orientation, 'orientation');
-    const [hasImage, setHasImage] = useState(true);
+    const [hasImage, setHasImage] = useState(false);
     const navigate = useNavigate();
     let audio = new Audio(AudioFile);
     let audioComplete = new Audio(AudioFileComplete);
 
     const solvePuzzle = () => {
         canvas.solve();
+        canvas.puzzle.pieces.forEach(piece => {
+            piece.translate(containerRef.current.clientWidth * 0.055, 25);
+        });
         canvas.redraw();
         audioComplete.play();
         setTimeout(() => setShowModal(true), 500)
@@ -39,7 +42,8 @@ const DemoPuzzle = ({ isLandscape = false }) => {
         canvas.scale(containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
         canvas.shuffleGrid();
         canvas.puzzle.pieces.forEach(piece => {
-            const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
+            // const translateY = (containerRef.current.clientHeight * 0.5) / (containerRef.current.offsetWidth / ORIENTATION_SETTINGS[orientation].scale);
+            const translateY = (containerRef.current.clientWidth * 1) / scale;
             piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
         });
         canvas.redraw();
@@ -52,10 +56,17 @@ const DemoPuzzle = ({ isLandscape = false }) => {
 
         if (clientWidth * 2 < clientHeight) {
             setAdditionalHeight(0);
-        } else if (clientHeight - clientWidth > 200) {
+        } else if (clientHeight - clientWidth > 325) {
+            console.log(clientHeight - clientWidth, '> 325');
             setAdditionalHeight(100);
-        } else {
+        } else if (clientHeight - clientWidth > 260) {
+            console.log(clientHeight - clientWidth, '> 260');
             setAdditionalHeight(200);
+        } else if (clientHeight - clientWidth > 200) {
+            console.log(clientHeight - clientWidth, '> 200');
+            setAdditionalHeight(300);
+        } else {
+            setAdditionalHeight(400);
         }
     }
 
@@ -109,7 +120,8 @@ const DemoPuzzle = ({ isLandscape = false }) => {
             newCanvas.registerKeyboardGestures();
 
             newCanvas.puzzle.pieces.forEach(piece => {
-                const translateY = (containerRef.current.clientHeight * 0.5) / scale;
+                // const translateY = (containerRef.current.clientHeight * 0.6) / scale;
+                const translateY = (containerRef.current.clientWidth * 1) / scale;
                 piece.translate(ORIENTATION_SETTINGS[orientation].translateX, translateY);
             });
 

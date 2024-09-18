@@ -29,7 +29,7 @@ const Settings = ({ shuffle, redraw, solve, toggleImage, hasImage }) => {
                 isRotate={true}
             />
             <div className={clsx(styles.modal, { [styles.open]: showModal })} ref={modalRef}>
-                <div onClick={toggleImage}><PreviewIcon /> {hasImage ? "Rimuovi" : "Aggiungi"} immagine</div>
+                <div onClick={toggleImage}><PreviewIcon /> {hasImage ? "Nascondi" : "Mostra"} immagine</div>
                 <div onClick={solve} className={styles.solve}><SolveIcon /> Risolvi</div>
                 <div onClick={redraw}><RestartIcon /> Ricomincia</div>
                 <div onClick={shuffle}><ResetIcon /> Riordina</div>
