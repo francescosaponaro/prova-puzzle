@@ -31,7 +31,7 @@ const DemoPuzzle = ({ isLandscape }) => {
     const solvePuzzle = () => {
         canvas.solve();
         canvas.puzzle.pieces.forEach(piece => {
-            piece.translate(containerRef.current.clientWidth * 0.055, 25);
+            piece.translate(containerRef.current.clientWidth * 0.025, 10);
         });
         canvas.redraw();
         audioComplete.play();
