@@ -50,6 +50,7 @@ const Home = () => {
                   puzzle.orientation
                 )
               }
+              soldOut={puzzle.soldOut}
             />
           ))}
         </div>

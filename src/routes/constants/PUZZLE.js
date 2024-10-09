@@ -17,6 +17,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/voglio-ballare",
     id: "voglio-ballare",
     orientation: "portrait",
+    soldOut: false,
   },
   {
     img: SanGhostino,
@@ -25,6 +26,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/san-gostino",
     id: "san-ghostino",
     orientation: "landscape",
+    soldOut: false,
   },
   {
     img: PazzoPomeriggio,
@@ -33,6 +35,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/pazzo-pomeriggio",
     id: "pazzo-pomeriggio",
     orientation: "portrait",
+    soldOut: false,
   },
   {
     img: IDolciSegretiDelNatale,
@@ -41,6 +44,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/i-dolci-segreti-del-natale-1000-pezzi",
     id: "i-dolci-segreti-del-natale",
     orientation: "landscape",
+    soldOut: false,
   },
   {
     img: WhatWillBe,
@@ -50,6 +54,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/what-will-be-will-be",
     id: "what-will-be",
     orientation: "portrait",
+    soldOut: false,
   },
   {
     img: MrGonfiabile,
@@ -58,6 +63,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/mr-gonfiabile-1000-pezzi",
     id: "mr-gonfiabile",
     orientation: "portrait",
+    soldOut: false,
   },
   {
     img: SpringSnack,
@@ -66,6 +72,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/spring-snack-500-pezzi",
     id: "spring-snack",
     orientation: "portrait",
+    soldOut: false,
   },
   {
     img: Jamboree,
@@ -74,6 +81,7 @@ const PuzzleList = [
     link: "https://stopuzzle.com/collections/solo-puzzle/products/jamboree",
     id: "jamboree",
     orientation: "portrait",
+    soldOut: false,
   },
   {
     img: PelosettiBaffuti,
@@ -82,6 +90,7 @@ const PuzzleList = [
     link: "",
     id: "pelosetti-baffuti",
     orientation: "portrait",
+    soldOut: true,
   },
   {
     img: CucinaDiOsaka,
@@ -90,6 +99,7 @@ const PuzzleList = [
     link: "",
     id: "la-cucina-di-osaka",
     orientation: "landscape",
+    soldOut: true,
   },
 ];
 

@@ -12,15 +12,37 @@
   &__img {
     width: 100%;
     height: 150px;
-    object-fit: cover;
     transition: transform 0.5s;
     overflow: hidden;
+    position: relative;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s;
+    }
+  }
+
+  &__sold_out {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__text {
+      background: #ffffff;
+      padding: 10px 20px;
+      border-radius: 14px;
+      color: red;
+      text-transform: uppercase;
+      font-weight: 600;
+      transform: rotate(45deg);
     }
   }
 
