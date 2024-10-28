@@ -58,5 +58,14 @@
   &__cta {
     width: 100%;
     padding: 0px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__sold_out {
+      background-color: transparent !important;
+      border: 1px solid $black;
+      color: $black !important;
+    }
   }
 }

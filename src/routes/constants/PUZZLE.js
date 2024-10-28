@@ -1,13 +1,13 @@
-import VoglioBallare from "@assets/images/VoglioBallare.png";
-import SanGhostino from "@assets/images/SanGhostino.png";
-import PazzoPomeriggio from "@assets/images/PazzoPomeriggio.png";
-import IDolciSegretiDelNatale from "@assets/images/IDolciSegretiDelNatale.png";
-import WhatWillBe from "@assets/images/WhatWillBe.png";
-import MrGonfiabile from "@assets/images/MrGonfiabile.png";
-import SpringSnack from "@assets/images/SpringSnack.png";
-import Jamboree from "@assets/images/Jamboree.png";
-import PelosettiBaffuti from "@assets/images/PelosettiBaffuti.png";
-import CucinaDiOsaka from "@assets/images/CucinaDiOsaka.png";
+import VoglioBallare from "@assets/images/VoglioBallare.webp";
+import SanGhostino from "@assets/images/SanGhostino.webp";
+import PazzoPomeriggio from "@assets/images/PazzoPomeriggio.webp";
+import IDolciSegretiDelNatale from "@assets/images/IDolciSegretiDelNatale.webp";
+import WhatWillBe from "@assets/images/WhatWillBe.webp";
+import MrGonfiabile from "@assets/images/MrGonfiabile.webp";
+import SpringSnack from "@assets/images/SpringSnack.webp";
+import Jamboree from "@assets/images/Jamboree.webp";
+import PelosettiBaffuti from "@assets/images/PelosettiBaffuti.webp";
+import CucinaDiOsaka from "@assets/images/CucinaDiOsaka.webp";
 
 const PuzzleList = [
   {

@@ -25,13 +25,15 @@ const Home = () => {
     <section className={styles.page}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h1>Componi Stopuzzle Online</h1>
+          <h1>Puzzle Online: Ricomponi i pezzi del disegno</h1>
           <p>
-            Scopri il puzzle online di Stopuzzle: una sfida coinvolgente e
+            {/* Scopri il puzzle online di Stopuzzle: una sfida coinvolgente e
             rilassante, pensata per ogni appassionato. Ogni pezzo si incastra
             perfettamente, rivelando un’immagine unica creata dai migliori
             illustratori. Divertiti a completarlo ovunque tu sia e scopri le
-            sorprese che abbiamo in serbo per te.
+            sorprese che abbiamo in serbo per te. */}
+            StoPuzzle lancia il suo primo gioco di puzzle online, ricomponi i
+            pezzi e scopri ll’illustrazione!
           </p>
         </div>
         <div className={styles.puzzle_list}>

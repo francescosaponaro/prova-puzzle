@@ -22,19 +22,21 @@ const ProductCard = ({ img, title, onClick, soldOut }) => {
       </div>
       <p className={styles.card__title}>{title}</p>
       <div className={styles.card__cta}>
-        <PrimaryButton
-          text={soldOut ? "Avvisami quando torna in stock" : "Gioca"}
-          onClick={() => {
-            if (soldOut) {
-              // Opens the default email client with a subject line
+        {soldOut && (
+          <PrimaryButton
+            text="Avvisami quando torna in stock"
+            onClick={() => {
               window.location.href =
                 "mailto:puzzle@zumbat.it?subject=Prenotazione%20puzzle";
-            } else {
-              onClick();
-            }
-          }}
+            }}
+          />
+        )}
+        <PrimaryButton
+          text="Gioca"
+          onClick={onClick}
           onEnter={() => setIsHovered(true)}
           onLeave={() => setIsHovered(false)}
+          className={soldOut ? styles.card__cta__sold_out : ""}
         />
       </div>
     </div>
