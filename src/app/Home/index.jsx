@@ -13,11 +13,28 @@ const Home = () => {
     link: "",
     id: "",
     orientation: "",
+    soldOut: "",
   });
   const [showModal, setShowModal] = useState(false);
 
-  const openModal = (img, title, description, link, id, orientation) => {
-    setModalContent({ img, title, description, link, id, orientation });
+  const openModal = (
+    img,
+    title,
+    description,
+    link,
+    id,
+    orientation,
+    soldOut
+  ) => {
+    setModalContent({
+      img,
+      title,
+      description,
+      link,
+      id,
+      orientation,
+      soldOut,
+    });
     setShowModal(true);
   };
 
@@ -49,7 +66,8 @@ const Home = () => {
                   puzzle.description,
                   puzzle.link,
                   puzzle.id,
-                  puzzle.orientation
+                  puzzle.orientation,
+                  puzzle.soldOut
                 )
               }
               soldOut={puzzle.soldOut}
@@ -68,6 +86,7 @@ const Home = () => {
             link={modalContent?.link}
             id={modalContent.id}
             orientation={modalContent.orientation}
+            soldOut={modalContent.soldOut}
             closeModal={() => setShowModal(false)}
           />
         }

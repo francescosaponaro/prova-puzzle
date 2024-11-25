@@ -19,9 +19,7 @@ const SuccessModal = ({ closeModal, link }) => {
       <div className={styles.info}>
         <h2 className={styles.title}>Complimenti</h2>
         <p className={styles.description}>
-          Se ti va puoi acquistare la versione fisica sul nostro sito e
-          cliccando qui sotto attiverai il codice sconto che troverai al
-          checkout
+          Se ti va puoi acquistare la versione fisica sul nostro sito
         </p>
       </div>
       <div className={styles.ctas}>

@@ -87,19 +87,19 @@ const PuzzleList = [
     img: PelosettiBaffuti,
     title: "Pelosetti baffuti",
     description: "Il puzzle a cui non puoi resistere se sei amante dei gatti.",
-    link: "",
+    link: "https://stopuzzle.com/collections/solo-puzzle/products/pelosetti-baffuti",
     id: "pelosetti-baffuti",
     orientation: "portrait",
-    soldOut: true,
+    soldOut: false,
   },
   {
     img: CucinaDiOsaka,
     title: "La cucina di Osaka",
     description: "こんにちは tuffati nella cultura e cucina giapponese",
-    link: "",
+    link: "https://stopuzzle.com/collections/solo-puzzle/products/la-cucina-di-osaka",
     id: "la-cucina-di-osaka",
     orientation: "landscape",
-    soldOut: true,
+    soldOut: false,
   },
 ];
 

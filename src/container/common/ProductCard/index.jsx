@@ -14,15 +14,15 @@ const ProductCard = ({ img, title, onClick, soldOut }) => {
           alt={title}
           className={clsx({ [styles.hover]: isHovered })}
         />
-        {soldOut && (
+        {/* {soldOut && (
           <div className={styles.card__sold_out}>
             <div className={styles.card__sold_out__text}>sold out</div>
           </div>
-        )}
+        )} */}
       </div>
       <p className={styles.card__title}>{title}</p>
       <div className={styles.card__cta}>
-        {soldOut && (
+        {/* {soldOut && (
           <PrimaryButton
             text="Avvisami quando torna in stock"
             onClick={() => {
@@ -30,13 +30,14 @@ const ProductCard = ({ img, title, onClick, soldOut }) => {
                 "mailto:puzzle@zumbat.it?subject=Prenotazione%20puzzle";
             }}
           />
-        )}
+        )} */}
         <PrimaryButton
           text="Gioca"
           onClick={onClick}
           onEnter={() => setIsHovered(true)}
           onLeave={() => setIsHovered(false)}
-          className={soldOut ? styles.card__cta__sold_out : ""}
+          // className={soldOut ? styles.card__cta__sold_out : ""}
+          className={styles.card__cta}
         />
       </div>
     </div>

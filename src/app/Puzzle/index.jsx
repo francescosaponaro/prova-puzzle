@@ -19,7 +19,7 @@ const DemoPuzzle = () => {
   const [showModal, setShowModal] = useState(false);
   const [canvas, setCanvas] = useState(null);
   const [additionalHeight, setAdditionalHeight] = useState(0);
-  const [hasImage, setHasImage] = useState(false);
+  const [hasImage, setHasImage] = useState(true);
   const navigate = useNavigate();
   let audio = new Audio(AudioFile);
   let audioComplete = new Audio(AudioFileComplete);

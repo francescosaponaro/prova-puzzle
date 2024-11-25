@@ -26,6 +26,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 30px;
+    position: relative;
+    overflow: hidden;
 
     @media (max-width: 500px) {
       height: 250px;
@@ -35,6 +37,28 @@
       width: 50%;
       height: 90%;
       object-fit: cover;
+    }
+  }
+
+  .sold_out {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__text {
+      background: #ffffff;
+      padding: 10px 20px;
+      border-radius: 14px;
+      color: red;
+      text-transform: uppercase;
+      font-weight: 600;
+      transform: rotate(45deg);
     }
   }
 
@@ -63,6 +87,13 @@
     gap: 10px;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+
+    .cta__sold_out {
+      background-color: transparent !important;
+      border: 1px solid $black;
+      color: $black !important;
+    }
 
     &__link {
       height: 64px;
